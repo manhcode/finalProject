@@ -4,9 +4,11 @@ import { FaHome } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 
 import Menu from "./Menu";
+import { useContext } from "react";
+import { AuthContext } from "~/shared/AuthProvider";
 
 function Header() {
-  const currentUser = true;
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <div className="py-4 w-full flex justify-around items-center">

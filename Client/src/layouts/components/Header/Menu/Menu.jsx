@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { FaBook, FaHeart, FaUserCircle } from "react-icons/fa";
+import { useContext, useState } from "react";
+import { FaBook, FaUserCircle } from "react-icons/fa";
 
 import ListItem from "./ListItem";
+import routes from "~/config/routes";
 import { CiLogout } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "~/shared/AuthProvider";
 
 function Menu() {
   const navigate = useNavigate();
@@ -11,21 +13,14 @@ function Menu() {
     {
       title: "Profile",
       link: () => {
-        navigate("/");
+        navigate(routes.profile);
       },
       icon: <FaUserCircle size={18} className="mr-4" />,
     },
     {
-      title: "Favorites",
-      link: () => {
-        navigate("/");
-      },
-      icon: <FaHeart size={18} className="mr-4 text-rose-500" />,
-    },
-    {
       title: "My course",
       link: () => {
-        navigate("/");
+        navigate(routes.myCourses);
       },
       icon: <FaBook size={18} className="mr-4 text-sky-500" />,
     },
@@ -39,7 +34,7 @@ function Menu() {
   ];
 
   const [isOpen, setIsOpen] = useState(false);
-  const role = 2;
+  const { role } = useContext(AuthContext);
 
   return (
     <div className="relative">
@@ -49,7 +44,7 @@ function Menu() {
         </button>
       ) : (
         <Link
-          to={"/"}
+          to={routes.homeManager}
           className="bg-green-500 text-white font-medium px-4 py-2 rounded-lg "
         >
           Dashboard
