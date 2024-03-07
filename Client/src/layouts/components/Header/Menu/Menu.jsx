@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaBook, FaUserCircle } from "react-icons/fa";
+import { FaBook, FaHeart, FaUserCircle } from "react-icons/fa";
 
 import ListItem from "./ListItem";
 import routes from "~/config/routes";
@@ -16,6 +16,13 @@ function Menu() {
         navigate(routes.profile);
       },
       icon: <FaUserCircle size={18} className="mr-4" />,
+    },
+    {
+      title: "Favorites",
+      link: () => {
+        navigate(routes.favorites);
+      },
+      icon: <FaHeart size={18} className="mr-4 text-rose-500" />,
     },
     {
       title: "My course",
