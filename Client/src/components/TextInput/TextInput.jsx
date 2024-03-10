@@ -1,15 +1,20 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 
 function TextInput({ type, title, value, onChange, name }) {
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState(true);
+
+  useEffect(() => {
+    if (type === "password") setShowPass(false);
+  }, [type]);
 
   return (
     <div className="relative h-11 w-full min-w-[200px]">
       <input
+        required
         placeholder=""
-        type={showPass ? "text" : "password"}
+        type={type === "email" ? "email" : showPass ? "text" : "password"}
         value={value}
         onChange={onChange}
         name={name}
