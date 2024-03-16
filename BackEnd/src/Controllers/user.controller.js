@@ -1,5 +1,11 @@
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} = require("firebase/storage");
 
 const UserModel = require("../models/user.model");
 const CourseModel = require("../models/course.model");
