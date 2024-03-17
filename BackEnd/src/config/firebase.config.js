@@ -1,10 +1,11 @@
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCT456My4AM91Hda4Tuf6vU5Ry-Y-tC16c",
-  authDomain: "course-eb7fe.firebaseapp.com",
-  projectId: "course-eb7fe",
-  storageBucket: "course-eb7fe.appspot.com",
-  messagingSenderId: "751697849632",
-  appId: "1:751697849632:web:2701eea44aa08bc1c63b45",
+  APIKEY: "AIzaSyBPqr2MlXPQkeEgEC06HXMKrhRI6UA4x2Y",
+  authDomain: "course-91414.firebaseapp.com",
+  projectId: "course-91414",
+  storageBucket: "course-91414.appspot.com",
+  messagingSenderId: "314440510943",
+  appId: "1:314440510943:web:9aec916a9d9977738e686a",
 };
 
 module.exports = { firebaseConfig };
