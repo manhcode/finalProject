@@ -1,55 +1,28 @@
+import { useEffect, useState } from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 import Logo from "~/assets/image/Course.png";
+import ClientEmpty from "~/components/ClientEmpty";
 import ListCourse from "~/components/ListCourse";
 import routes from "~/config/routes";
+import * as courseService from "~/services/courseService";
 
 function Home() {
-  const data = [
-    {
-      id: 1,
-      title: "Course 1",
-      price: 100,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 2,
-      title: "Course 2",
-      price: 12300,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 3,
-      title: "Course 3",
-      price: 0,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 4,
-      title: "Course 4",
-      price: 0,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 5,
-      title: "Course 5",
-      price: 5000,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 6,
-      title: "Course 6",
-      price: 6000,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-  ];
+  const [data, setData] = useState([]);
+
+  const fetch = () => {
+    courseService
+      .getAllCourse({ page: 1, perPage: 10 })
+      .then((course) => {
+        setData(course.data.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
 
   return (
     <>
@@ -74,7 +47,7 @@ function Home() {
           </Link>
         </div>
 
-        <ListCourse data={data} />
+        {data.length > 0 ? <ListCourse data={data} /> : <ClientEmpty />}
       </div>
     </>
   );

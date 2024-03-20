@@ -1,6 +1,5 @@
 // routeConfig
 import config from "~/config";
-import Favorites from "~/pages/Favorites";
 
 // Router change Pages
 import Home from "~/pages/Home";
@@ -12,25 +11,20 @@ import HomeManager from "~/pages/Manager/HomeManager";
 
 import { Login, Register } from "~/pages/Auth";
 import { ManagerLayout } from "~/layouts";
-import { CourseTeacher, PaymentTeacher } from "~/pages/Manager/Teacher";
-import {
-  CourseAdmin,
-  PaymentAdmin,
-  StudentAdmin,
-  TeacherAdmin,
-} from "~/pages/Manager/Admin";
-import NewTeacher from "~/pages/Manager/Admin/NewTeacher";
-import NewCourse from "~/pages/Manager/Teacher/NewCourse";
+import { CourseAdmin, StudentAdmin, TeacherAdmin } from "~/pages/Manager/Admin";
 import EditProfile from "~/pages/Profile/EditProfile";
+import PaymentResult from "~/pages/PaymentResult";
+import DetailTeacher from "~/pages/DetailTeacher";
 
 const publicRoutes = [
   { path: config.routes.home, component: Home },
   { path: config.routes.profile, component: Profile },
   { path: config.routes.editProfile, component: EditProfile },
-  { path: config.routes.favorites, component: Favorites },
   { path: config.routes.courses, component: Courses },
   { path: config.routes.myCourses, component: MyCourses },
   { path: config.routes.detailCourse, component: DetailCourse },
+  { path: config.routes.detailTeacher, component: DetailTeacher },
+  { path: config.routes.paymentResult, component: PaymentResult },
 
   { path: config.routes.login, component: Login, Layout: null },
   { path: config.routes.register, component: Register, Layout: null },
@@ -39,11 +33,6 @@ const publicRoutes = [
   {
     path: config.routes.homeManager,
     component: HomeManager,
-    Layout: ManagerLayout,
-  },
-  {
-    path: config.routes.newTeacher,
-    component: NewTeacher,
     Layout: ManagerLayout,
   },
   {
@@ -59,28 +48,6 @@ const publicRoutes = [
   {
     path: config.routes.courseAdmin,
     component: CourseAdmin,
-    Layout: ManagerLayout,
-  },
-  {
-    path: config.routes.paymentAdmin,
-    component: PaymentAdmin,
-    Layout: ManagerLayout,
-  },
-
-  // Manager teacher
-  {
-    path: config.routes.coursesTeacher,
-    component: CourseTeacher,
-    Layout: ManagerLayout,
-  },
-  {
-    path: config.routes.paymentTeacher,
-    component: PaymentTeacher,
-    Layout: ManagerLayout,
-  },
-  {
-    path: config.routes.newCourse,
-    component: NewCourse,
     Layout: ManagerLayout,
   },
 ];

@@ -12,10 +12,6 @@ const SIDEBAR_TEACHER = [
     title: "Course",
     link: routes.coursesTeacher,
   },
-  {
-    title: "Payment",
-    link: routes.paymentTeacher,
-  },
 ];
 
 const SIDEBAR_ADMIN = [
@@ -35,10 +31,6 @@ const SIDEBAR_ADMIN = [
     title: "Course",
     link: routes.courseAdmin,
   },
-  {
-    title: "Payment",
-    link: routes.paymentAdmin,
-  },
 ];
 
 function SideBar() {
@@ -56,8 +48,8 @@ function SideBar() {
           to={data.link}
           className={({ isActive }) =>
             `${
-              isActive ? "text-black font-medium bg-green-400 " : ""
-            } px-4 py-3 cursor-pointer hover:bg-green-400 hover:font-medium`
+              isActive ? "font-medium bg-green-400  text-white " : ""
+            } px-4 py-3 cursor-pointer hover:bg-green-400 hover:text-white hover:font-medium`
           }
           key={data.title}
         >

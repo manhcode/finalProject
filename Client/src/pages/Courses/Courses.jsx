@@ -1,74 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useLocation } from "react-router-dom";
 
 import ListCourse from "~/components/ListCourse";
-import Logo from "~/assets/image/Course.png";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
+import * as courseService from "~/services/courseService";
+import ClientEmpty from "~/components/ClientEmpty";
 function Courses() {
-  const [currentPage, setCurrentPage] = useState(0);
-  console.log(currentPage);
+  const location = useLocation();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState([]);
+  const [totalPage, setTotalPage] = useState(0);
+  const queryParams = new URLSearchParams(location.search);
+  const nameCourse = queryParams.get("nameCourse");
+
   const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
+    setCurrentPage(selectedPage.selected + 1);
   };
-  
-  const data = [
-    {
-      id: 1,
-      title: "Course 1",
-      price: 1000,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 2,
-      title: "Course 2",
-      price: 1000,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 3,
-      title: "Course 3",
-      price: 3000,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 4,
-      title: "Course 4",
-      price: 4000,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 5,
-      title: "Course 5",
-      price: 5000,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-    {
-      id: 6,
-      title: "Course 6",
-      price: 6000,
-      imageUrl: Logo,
-      description: "This is the first course",
-    },
-  ];
+
+  useEffect(() => {
+    courseService
+      .getAllCourse({
+        page: currentPage,
+        perPage: 10,
+        nameCourse: nameCourse,
+      })
+      .then((course) => {
+        setData(course.data.data);
+        setTotalPage(course.data.totalPages);
+      })
+      .catch((error) => console.log(error));
+  }, [currentPage, nameCourse]);
 
   return (
     <>
-      <ListCourse data={data} />
+      {data.length > 0 ? <ListCourse data={data} /> : <ClientEmpty />}
+
       <ReactPaginate
-        pageCount={10}
+        pageCount={totalPage}
         pageRangeDisplayed={3}
         marginPagesDisplayed={1}
         onPageChange={handlePageChange}
         containerClassName={"pagination"}
         activeClassName={"underline"}
-        previousLabel={currentPage === 0 ? null : <IoIosArrowBack />}
-        nextLabel={currentPage === 9 ? null : <IoIosArrowForward />}
+        previousLabel={currentPage === 1 ? null : <IoIosArrowBack />}
+        nextLabel={currentPage >= totalPage ? null : <IoIosArrowForward />}
         className="flex justify-center mt-4"
         pageLinkClassName={"p-3"}
         pageClassName={"my-auto"}

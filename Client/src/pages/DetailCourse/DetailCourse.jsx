@@ -1,49 +1,133 @@
-import { useState } from "react";
-import ReviewCourse from "./ReviewCourse";
-import Instructor from "./Instructor";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
+import { AuthContext } from "~/shared/AuthProvider";
+import * as courseService from "~/services/courseService";
+import * as paymentService from "~/services/paymentService";
+import routes from "~/config/routes";
 
 function DetailCourse() {
-  const [detailTeacher, setDetailTeacher] = useState(true);
+  const params = useParams();
+  const navigator = useNavigate();
+  const { token, role } = useContext(AuthContext);
+  const [data, setData] = useState([]);
+  const [received, setReceived] = useState(false);
+
+  const fetchBuy = useCallback(() => {
+    if (token) {
+      courseService
+        .getMyCourse({})
+        .then((course) => {
+          const checked = course.data.data.filter(
+            (item) => item.courseId._id === data._id
+          );
+          if (checked.length > 0) {
+            setReceived(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [data._id, token]);
+
+  const fetch = () => {
+    courseService
+      .buyCourse({ courseId: data._id })
+      .then()
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    courseService
+      .getCourseById({ id: params.id })
+      .then((course) => {
+        setData(course.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    fetchBuy();
+  }, [params, fetchBuy]);
+
+  const fetchPayment = () => {
+    const dataPayment = {
+      amount: data.price,
+      language: "vn",
+      myCourseId: data._id,
+      bankCode: "",
+    };
+
+    paymentService
+      .createUrlVnPay({ data: dataPayment })
+      .then((response) => {
+        if (response.status == 200) {
+          window.location.href = response.data;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const onClickBuy = () => {
+    if (token) {
+      if (received) {
+        window.location.href = data.file;
+      } else if (data.price === 0) {
+        fetch();
+      } else {
+        fetchPayment();
+      }
+    } else {
+      navigator(routes.login);
+    }
+  };
 
   return (
-    <>
-      <div className="flex border-t border-b p-10">
-        <div className="w-1/2 flex justify-center items-center">
-          <div>
-            <p className="text-2xl font-bold">Title course</p>
-            <p className="my-2">Description course</p>
-            <button className="w-[160px] h-[48px] rounded-md border border-black font-medium mr-3">
-              Add to favorite
+    <div>
+      <div className="flex p-10">
+        <div className="w-1/2 flex flex-col justify-center items-center">
+          <p className="text-2xl font-bold">{data.nameCourse}</p>
+          {role > 0 && (
+            <button
+              className="w-[160px] h-[48px] rounded-md bg-black text-white font-medium "
+              onClick={onClickBuy}
+            >
+              {received ? "Download" : data.price > 0 ? "Buy now" : "Get free"}
             </button>
-            <button className="w-[160px] h-[48px] rounded-md bg-black text-white font-medium ">
-              Buy now
-            </button>
-          </div>
+          )}
         </div>
-        <div className="bg-neutral-300 h-[400px] w-[600px] rounded-xl overflow-hidden"></div>
-      </div>
-
-      <div className="flex justify-center mt-2">
-        <div className="border rounded-xl overflow-hidden">
-          <button
-            className={`px-4 py-2 ${detailTeacher && "bg-black text-white"}`}
-            onClick={() => setDetailTeacher(true)}
-          >
-            Instructor
-          </button>
-          <button
-            className={`px-4 py-2 ${!detailTeacher && "bg-black text-white"}`}
-            onClick={() => setDetailTeacher(false)}
-          >
-            Review
-          </button>
+        <div className="w-1/2 flex justify-center border-l border-neutral-100 items-center">
+          <img
+            src={data.imageUrl}
+            alt=""
+            className="h-[500px] w-auto object-cover rounded-xl"
+            style={{ filter: "drop-shadow(10px 7px 10px rgba(0,0,0,.3)" }}
+          />
         </div>
       </div>
-
-      <div className="px-28">
-        {detailTeacher ? <Instructor /> : <ReviewCourse />}
+      <div className="px-10">
+        {data.teacherId && (
+          <Link to={`/teacher/${data.teacherId?._id}`}>
+           <div  className="flex">
+              <img
+                src={data.teacherId?.imageUrl}
+                alt=""
+                className="w-[100px] h-[100px] rounded-full shadow-xl"
+              />
+              <div className="m-4">
+                <p className="font-bold ">{data.teacherId.fullName}</p>
+              </div>
+           </div>
+          </Link>
+        )}
+        <p className="text-center text-2xl font-bold mb-4">Description</p>
+        <p className="m-4">{data.description}</p>
       </div>
-    </>
+    </div>
   );
 }
 

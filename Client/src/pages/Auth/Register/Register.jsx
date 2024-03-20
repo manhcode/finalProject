@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import TextInput from "~/components/TextInput";
 import routes from "~/config/routes";
+import { AuthContext } from "~/shared/AuthProvider";
 
 function Register() {
+  const { register } = useContext(AuthContext);
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -19,9 +21,14 @@ function Register() {
     setData(newData);
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    register(data);
+  };
+
   return (
     <div className="h-[100vh] flex justify-center items-center bg-neutral-100">
-      <div className="relative flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+      <form onSubmit={onSubmit} className="relative flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
         <div className="relative mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tl from-gray-900 to-slate-800">
           <h3 className="block font-sans text-3xl font-semibold leading-snug tracking-normal text-white antialiased">
             Sign Up
@@ -30,7 +37,7 @@ function Register() {
         <div className="flex flex-col gap-4 px-6 pt-6">
           <TextInput
             type="text"
-            title={"Username ..."}
+            title={"Username"}
             value={data.username}
             name={"username"}
             onChange={onChange}
@@ -38,7 +45,7 @@ function Register() {
 
           <TextInput
             type="password"
-            title={"Password ..."}
+            title={"Password"}
             value={data.password}
             name={"password"}
             onChange={onChange}
@@ -46,15 +53,15 @@ function Register() {
 
           <TextInput
             type="password"
-            title={"re-enter the password ..."}
+            title={"re-enter the password"}
             value={data.rePassword}
             name={"rePassword"}
             onChange={onChange}
           />
 
           <TextInput
-            type="text"
-            title={"fullName ..."}
+            type="fullName"
+            title={"fullName"}
             value={data.fullName}
             name={"fullName"}
             onChange={onChange}
@@ -62,7 +69,7 @@ function Register() {
 
           <TextInput
             type="email"
-            title={"email ..."}
+            title={"email"}
             value={data.email}
             name={"email"}
             onChange={onChange}
@@ -96,7 +103,7 @@ function Register() {
         <div className="text-center px-4">
           <button
             className="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white"
-            type="button"
+            type="submit"
           >
             Sign up
           </button>
@@ -110,7 +117,7 @@ function Register() {
             Sign In
           </Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaBook, FaHeart, FaUserCircle } from "react-icons/fa";
+import { FaBook, FaUserCircle } from "react-icons/fa";
 
 import ListItem from "./ListItem";
 import routes from "~/config/routes";
@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "~/shared/AuthProvider";
 
 function Menu() {
+  const { logOut, currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const MENU_STUDENT = [
     {
@@ -16,13 +17,6 @@ function Menu() {
         navigate(routes.profile);
       },
       icon: <FaUserCircle size={18} className="mr-4" />,
-    },
-    {
-      title: "Favorites",
-      link: () => {
-        navigate(routes.favorites);
-      },
-      icon: <FaHeart size={18} className="mr-4 text-rose-500" />,
     },
     {
       title: "My course",
@@ -34,7 +28,7 @@ function Menu() {
     {
       title: "Log out",
       link: () => {
-        alert("logOut");
+        logOut();
       },
       icon: <CiLogout size={18} className="mr-4" />,
     },
@@ -47,15 +41,27 @@ function Menu() {
     <div className="relative">
       {role === 2 ? (
         <button onClick={() => setIsOpen(!isOpen)}>
-          <FaUserCircle size={32} />
+          {currentUser.imageUrl ? (
+            <img
+              src={currentUser.imageUrl}
+              alt="avatar"
+              className="w-[50px] h-[50px] rounded-full object-cover object-top"
+            />
+          ) : (
+            <FaUserCircle size={32} />
+          )}
         </button>
       ) : (
-        <Link
-          to={routes.homeManager}
-          className="bg-green-500 text-white font-medium px-4 py-2 rounded-lg "
-        >
-          Dashboard
-        </Link>
+        <div className="flex items-center">
+          <Link
+            to={routes.homeManager}
+            className="bg-primary text-white font-medium px-4 py-2 rounded-lg "
+          >
+            Dashboard
+          </Link>
+
+          <CiLogout size={58} className="cursor-pointer p-4" onClick={logOut} />
+        </div>
       )}
       {isOpen && (
         <div className="absolute min-w-[150px] right-0 border rounded-md bg-white z-10">

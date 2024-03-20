@@ -1,33 +1,21 @@
+import { useEffect, useState } from "react";
+
 import ListMyCourses from "./ListMyCourse";
+import * as courseService from "~/services/courseService";
 
 function MyCourses() {
-  const data = [
-    {
-      _id: 1,
-      courseName: "ReactJS",
-      teacherName: "An",
-    },
-    {
-      _id: 2,
-      courseName: "HTML",
-      teacherName: "HOA",
-    },
-    {
-      _id: 3,
-      courseName: "JAVA",
-      teacherName: "Thang",
-    },
-    {
-      _id: 4,
-      courseName: "JAVASCRIPT",
-      teacherName: "An",
-    },
-    {
-      _id: 5,
-      courseName: "Python",
-      teacherName: "An",
-    },
-  ];
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    courseService
+      .getMyCourse({})
+      .then((courses) => {
+        setData(courses.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="px-20">
