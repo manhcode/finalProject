@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import routes from "~/config/routes";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import * as courseService from "~/services/courseService";
 
-function NewCourse() {
+function EditCourse() {
+  const params = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState({
     nameCourse: "",
@@ -35,7 +35,7 @@ function NewCourse() {
       setData(newData);
     }
   };
-
+  
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -46,15 +46,30 @@ function NewCourse() {
     formData.append("file", data.file);
 
     await courseService
-      .newCourse({ data: formData })
+      .editCourse({ data: formData, id: params.id })
       .then((result) => {
         if (result.status === 200) {
-          alert("add success");
-          navigate(routes.coursesTeacher);
+          alert("edit success");
+          navigate(-1);
         }
       })
       .catch((error) => console.log(error));
   };
+
+  useEffect(() => {
+    courseService
+      .getCourseById({ id: params.id })
+      .then((course) => {
+        setData({
+          nameCourse: course.data.nameCourse,
+          description: course.data.description,
+          price: course.data.price,
+          imageUrl: course.data.imageUrl,
+          file: course.data.file,
+        });
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <form onSubmit={onSubmit} className="w-3/4 mx-auto mt-10">
@@ -105,7 +120,7 @@ function NewCourse() {
           placeholder=" "
           required
           onChange={onChange}
-          value={data.image}
+          value={data.price}
         />
         <label
           htmlFor="price"
@@ -133,7 +148,6 @@ function NewCourse() {
           className="opacity-0 h-0"
           id="file_image"
           name="imageUrl"
-          required
           type="file"
           accept="image/*"
           onChange={onChangeFile}
@@ -148,7 +162,6 @@ function NewCourse() {
           Upload file course ( pdf or docx )
         </label>
         <input
-          required
           type="file"
           className="opacity-0 h-0"
           onChange={onChangeFile}
@@ -168,4 +181,4 @@ function NewCourse() {
   );
 }
 
-export default NewCourse;
+export default EditCourse;

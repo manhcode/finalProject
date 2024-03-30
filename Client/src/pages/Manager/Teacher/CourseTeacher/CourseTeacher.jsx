@@ -1,14 +1,72 @@
-import { useState } from "react";
-import { CiSearch } from "react-icons/ci";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
+import Modal from "~/components/Modal";
+
+import * as courseService from "~/services/courseService";
+import { AuthContext } from "~/shared/AuthProvider";
 
 function CourseTeacher() {
-  const [currentPage, setCurrentPage] = useState(0);
-  console.log(currentPage);
+  const { currentUser } = useContext(AuthContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState([]);
+  const [totalPage, setTotalPage] = useState(0);
+  const [nameCourse, setNameCourse] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [getIdModal, setGetIdModal] = useState("");
+
   const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
+    setCurrentPage(selectedPage.selected + 1);
   };
+
+  const onChange = (e) => {
+    setNameCourse(e.target.value);
+  };
+
+  const fetch = useCallback(() => {
+    courseService
+      .getCourseTeacher({
+        page: currentPage,
+        perPage: 10,
+        nameCourse: nameCourse,
+        teacherId: currentUser._id,
+      })
+      .then((course) => {
+        setData(course.data);
+        setTotalPage(course.totalPages);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [currentPage, nameCourse, currentUser]);
+
+  const onClose = () => {
+    setShowModal(false);
+  };
+
+  const onOpen = (id) => {
+    setShowModal(true);
+    setGetIdModal(id);
+  };
+
+  const onDelete = () => {
+    courseService
+      .deleteCourse({ id: getIdModal })
+      .then((res) => {
+        if (res.status === 200) {
+          fetch();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setShowModal(false);
+  };
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
 
   return (
     <div className="w-full px-10">
@@ -16,10 +74,11 @@ function CourseTeacher() {
         <div className="w-1/3 flex items-center border border-gray-200 rounded-xl overflow-hidden">
           <input
             placeholder="Search ..."
-            className="w-full pl-4 outline-none"
+            name="nameCourse"
+            onChange={onChange}
+            value={nameCourse || ""}
+            className="w-full pl-4 outline-none p-2"
           />
-
-          <CiSearch className="cursor-pointer w-10 h-10 p-2" color="#ccc" />
         </div>
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -35,43 +94,66 @@ function CourseTeacher() {
               <th scope="col" className="px-6 py-3">
                 Price
               </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
-              </th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b hover:bg-gray-100 ">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                Apple MacBook Pro 17
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">$2999</td>
-              <td className="px-6 py-4 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            {data.length > 0 ? (
+              data.map((item) => (
+                <tr
+                  className="bg-white border-b hover:bg-gray-100 "
+                  key={item._id}
                 >
-                  Edit
-                </a>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900"
+                  >
+                    {item.nameCourse}
+                  </th>
+                  <td className="px-6 py-4">{item.description}</td>
+                  <td className="px-6 py-4">
+                    {new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(item.price)}
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <Link
+                      to={`/manager/edit-course/${item._id}`}
+                      className="font-medium p-2 text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Edit
+                    </Link>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => onOpen(item._id)}
+                      className="font-medium p-2 text-red-600 dark:text-red-500 hover:underline"
+                    >
+                      DELETE
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <td colSpan={5} className="text-center py-4">
+                There is no data
               </td>
-            </tr>
+            )}
           </tbody>
         </table>
       </div>
 
       <ReactPaginate
-        pageCount={10}
+        pageCount={totalPage}
         pageRangeDisplayed={3}
         marginPagesDisplayed={1}
         onPageChange={handlePageChange}
         containerClassName={"pagination"}
         activeClassName={"underline"}
-        previousLabel={currentPage === 0 ? null : <IoIosArrowBack />}
-        nextLabel={currentPage === 9 ? null : <IoIosArrowForward />}
+        previousLabel={currentPage === 1 ? null : <IoIosArrowBack />}
+        nextLabel={currentPage >= totalPage ? null : <IoIosArrowForward />}
         className="flex justify-end mt-4"
         pageLinkClassName={"p-3"}
         pageClassName={"my-auto"}
@@ -81,6 +163,14 @@ function CourseTeacher() {
         nextClassName={"my-auto"}
         breakLinkClassName={"p-3"}
         breakClassName={"my-auto"}
+      />
+
+      <Modal
+        title="Delete course"
+        description={"Are you sure to delete the course?"}
+        showModal={showModal}
+        onClose={onClose}
+        onSubmit={onDelete}
       />
     </div>
   );

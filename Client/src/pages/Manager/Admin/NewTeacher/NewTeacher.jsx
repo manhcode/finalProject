@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "~/shared/AuthProvider";
 
 function NewTeacher() {
+  const { newTeacher } = useContext(AuthContext);
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -21,20 +23,28 @@ function NewTeacher() {
   const onChangeImage = (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
-      const img = URL.createObjectURL(e.target.files[0]);
+      const img = URL.createObjectURL(file);
       setImage(img);
+
+      const newData = { ...data };
+      newData.imageUrl = file;
+      setData(newData);
     }
   };
-
-  console.log(data);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    newTeacher({ data });
+  };
 
   return (
-    <form className="w-3/4 mx-auto mt-10">
+    <form onSubmit={onSubmit} className="w-3/4 mx-auto mt-10">
       <div className="relative z-0 w-full mb-5 group">
         <input
-          type="text"
-          name="Username"
           id="Username"
+          type="text"
+          name="username"
+          value={data.username}
+          onChange={onChange}
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required
@@ -49,15 +59,17 @@ function NewTeacher() {
       <div className="grid md:grid-cols-2 md:gap-6">
         <div className="relative z-0 w-full mb-5 group">
           <input
+            id="password"
             type="password"
-            name="floating_first_name"
-            id="floating_first_name"
+            name="password"
+            value={data.password}
+            onChange={onChange}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required
           />
           <label
-            htmlFor="floating_first_name"
+            htmlFor="password"
             className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Password
@@ -66,14 +78,16 @@ function NewTeacher() {
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="password"
-            name="floating_last_name"
-            id="floating_last_name"
+            name="rePassword"
+            id="rePassword"
+            value={data.rePassword}
+            onChange={onChange}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
             required
           />
           <label
-            htmlFor="floating_last_name"
+            htmlFor="rePassword"
             className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Re password
@@ -85,6 +99,8 @@ function NewTeacher() {
           type="text"
           name="fullName"
           id="fullName"
+          value={data.fullName}
+          onChange={onChange}
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required
@@ -124,14 +140,16 @@ function NewTeacher() {
       <div className="relative z-0 w-full mb-5 group">
         <input
           type="email"
-          name="floating_email"
-          id="floating_email"
+          name="email"
+          id="email"
+          value={data.email}
+          onChange={onChange}
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required
         />
         <label
-          htmlFor="floating_email"
+          htmlFor="email"
           className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Email address
@@ -145,7 +163,13 @@ function NewTeacher() {
         >
           Upload avatar
         </label>
-        {image && <img src={image} alt="" className="rounded-lg" />}
+        {image && (
+          <img
+            src={image}
+            alt=""
+            className="rounded-lg w-[100px] h-[100px] object-cover"
+          />
+        )}
       </div>
 
       <input
@@ -156,12 +180,11 @@ function NewTeacher() {
         type="file"
         accept="image/*"
         onChange={onChangeImage}
-        value={data.imageUrl}
       />
 
       <button
         type="submit"
-        className=" bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+        className=" bg-primary hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
       >
         Submit
       </button>

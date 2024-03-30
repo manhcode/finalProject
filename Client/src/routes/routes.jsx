@@ -11,9 +11,14 @@ import HomeManager from "~/pages/Manager/HomeManager";
 
 import { Login, Register } from "~/pages/Auth";
 import { ManagerLayout } from "~/layouts";
+import { CourseTeacher } from "~/pages/Manager/Teacher";
 import { CourseAdmin, StudentAdmin, TeacherAdmin } from "~/pages/Manager/Admin";
+import NewTeacher from "~/pages/Manager/Admin/NewTeacher";
+import NewCourse from "~/pages/Manager/Teacher/NewCourse";
 import EditProfile from "~/pages/Profile/EditProfile";
 import PaymentResult from "~/pages/PaymentResult";
+import EditUser from "~/pages/Manager/Admin/EditUser";
+import EditCourse from "~/pages/Manager/EditCourse";
 import DetailTeacher from "~/pages/DetailTeacher";
 
 const publicRoutes = [
@@ -36,8 +41,18 @@ const publicRoutes = [
     Layout: ManagerLayout,
   },
   {
+    path: config.routes.newTeacher,
+    component: NewTeacher,
+    Layout: ManagerLayout,
+  },
+  {
     path: config.routes.studentAdmin,
     component: StudentAdmin,
+    Layout: ManagerLayout,
+  },
+  {
+    path: config.routes.editUser,
+    component: EditUser,
     Layout: ManagerLayout,
   },
   {
@@ -48,6 +63,23 @@ const publicRoutes = [
   {
     path: config.routes.courseAdmin,
     component: CourseAdmin,
+    Layout: ManagerLayout,
+  },
+
+  // Manager teacher
+  {
+    path: config.routes.coursesTeacher,
+    component: CourseTeacher,
+    Layout: ManagerLayout,
+  },
+  {
+    path: config.routes.newCourse,
+    component: NewCourse,
+    Layout: ManagerLayout,
+  },
+  {
+    path: config.routes.editCourse,
+    component: EditCourse,
     Layout: ManagerLayout,
   },
 ];

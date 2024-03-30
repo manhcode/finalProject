@@ -85,6 +85,7 @@ function DetailCourse() {
       navigator(routes.login);
     }
   };
+console.log(role > 0)
 
   return (
     <div>

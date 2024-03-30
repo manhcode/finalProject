@@ -1,13 +1,69 @@
-import { useState } from "react";
-import { CiSearch } from "react-icons/ci";
+import { useCallback, useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
+import Modal from "~/components/Modal";
+
+import * as authService from "~/services/authService";
 
 function StudentAdmin() {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [data, setData] = useState([]);
+  const [fullName, setFullName] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [getIdModal, setGetIdModal] = useState("");
+
   const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
+    setCurrentPage(selectedPage.selected + 1);
   };
+
+  const onChange = (e) => {
+    setFullName(e.target.value);
+  };
+
+  const onClose = () => {
+    setShowModal(false);
+  };
+
+  const onOpen = (id) => {
+    setShowModal(true);
+    setGetIdModal(id);
+  };
+
+  const fetch = useCallback(() => {
+    authService
+      .getUser({
+        page: currentPage,
+        perPage: 10,
+        fullName: fullName,
+      })
+      .then((course) => {
+        setData(course.data);
+        setTotalPage(course.totalPages);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [currentPage, fullName]);
+
+  const onDelete = () => {
+    authService
+      .deleteUser({
+        id: getIdModal,
+      })
+      .then(() => {
+        fetch();
+        setShowModal(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
 
   return (
     <div className="w-full px-10">
@@ -15,10 +71,11 @@ function StudentAdmin() {
         <div className="w-1/3 flex items-center border border-gray-200 rounded-xl overflow-hidden">
           <input
             placeholder="Search ..."
-            className="w-full pl-4 outline-none"
+            className="w-full pl-4 outline-none p-2"
+            onChange={onChange}
+            value={fullName || ""}
+            name="fullName"
           />
-
-          <CiSearch className="cursor-pointer w-10 h-10 p-2" color="#ccc" />
         </div>
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -26,51 +83,71 @@ function StudentAdmin() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Course name
+                FullName
               </th>
               <th scope="col" className="px-6 py-3">
-                Description
+                Email
               </th>
               <th scope="col" className="px-6 py-3">
-                Price
+                Gender
               </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
-              </th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b hover:bg-gray-100 ">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                Apple MacBook Pro 17
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">$2999</td>
-              <td className="px-6 py-4 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            {data.length > 0 ? (
+              data.map((item) => (
+                <tr
+                  className="bg-white border-b hover:bg-gray-100 "
+                  key={item._id}
                 >
-                  Edit
-                </a>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {item.fullName}
+                  </th>
+                  <td className="px-6 py-4">{item.email}</td>
+                  <td className="px-6 py-4">
+                    {item.gender === 0 ? "Male" : "Female"}
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <Link
+                      to={`/manager/admin/user/edit/${item._id}`}
+                      className="font-medium p-2 text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Edit
+                    </Link>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => onOpen(item._id)}
+                      className="font-medium p-2 text-red-600 dark:text-red-500 hover:underline"
+                    >
+                      DELETE
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <td colSpan={5} className="text-center py-4">
+                There is no data
               </td>
-            </tr>
+            )}
           </tbody>
         </table>
       </div>
-      
+
       <ReactPaginate
-        pageCount={10}
+        pageCount={totalPage}
         pageRangeDisplayed={3}
         marginPagesDisplayed={1}
         onPageChange={handlePageChange}
         containerClassName={"pagination"}
         activeClassName={"underline"}
-        previousLabel={currentPage === 0 ? null : <IoIosArrowBack />}
-        nextLabel={currentPage === 9 ? null : <IoIosArrowForward />}
+        previousLabel={currentPage === 1 ? null : <IoIosArrowBack />}
+        nextLabel={currentPage >= totalPage ? null : <IoIosArrowForward />}
         className="flex justify-end mt-4"
         pageLinkClassName={"p-3"}
         pageClassName={"my-auto"}
@@ -80,6 +157,14 @@ function StudentAdmin() {
         nextClassName={"my-auto"}
         breakLinkClassName={"p-3"}
         breakClassName={"my-auto"}
+      />
+
+      <Modal
+        title="Delete course"
+        description={"Are you sure to delete the course?"}
+        showModal={showModal}
+        onClose={onClose}
+        onSubmit={onDelete}
       />
     </div>
   );

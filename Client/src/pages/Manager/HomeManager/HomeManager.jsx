@@ -1,11 +1,9 @@
-import CourseHome from "./CourseHome";
-import UserHome from "./UserHome";
+import Logo from "~/assets/image/Course.png";
 
 function HomeManager() {
   return (
-    <div className="w-full">
-      <CourseHome />
-      <UserHome />
+    <div className="flex justify-center w-full">
+      <img src={Logo} alt="course" />
     </div>
   );
 }
