@@ -91,7 +91,7 @@ console.log(role > 0)
     <div>
       <div className="flex p-10">
         <div className="w-1/2 flex flex-col justify-center items-center">
-          <p className="text-2xl font-bold">{data.nameCourse}</p>
+          <p className="text-2xl font-bold mx-10 my-14">{data.nameCourse}</p>
           {role > 0 && (
             <button
               className="w-[160px] h-[48px] rounded-md bg-black text-white font-medium "

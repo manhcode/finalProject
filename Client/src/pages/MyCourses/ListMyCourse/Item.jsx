@@ -8,20 +8,22 @@ function Item({ data }) {
   };
 
   return (
-    <div className="flex my-4 relative">
+    <div className="flex my-4 relative rounded-lg  overflow-hidden">
       <Link
         to={`/course/${data.courseId._id}`}
-        className="mr-4  rounded-lg overflow-hidden w-[300px] flex justify-center bg-red-100"
+        className="mr-4 flex ove justify-center"
       >
         <img
           src={data.courseId.imageUrl}
           alt=""
-          className="object-cover w-auto h-[200px] "
+          className="object-center max-w-[400px] h-[200px] "
         />
       </Link>
-      <div className="my-4">
-        <p className="text-xl font-bold">{data.courseId.nameCourse}</p>
-        <p className="text-sm">{data.teacherId.fullName}</p>
+      <div className="my-4 mr-10">
+        <div className="flex flex-col justify-between h-full">
+          <p className="text-xl font-bold">{data.courseId.nameCourse}</p>
+          <p className="text-sm">{data.teacherId.fullName}</p>
+        </div>
       </div>
       <FaCloudDownloadAlt
         size={32}

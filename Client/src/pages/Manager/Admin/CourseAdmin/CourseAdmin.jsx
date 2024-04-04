@@ -104,7 +104,7 @@ function CourseAdmin() {
                 >
                   <th
                     scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                    className="px-6 py-4  font-medium text-gray-900 "
                   >
                     {item.nameCourse}
                   </th>

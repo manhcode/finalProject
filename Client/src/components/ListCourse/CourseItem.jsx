@@ -45,7 +45,7 @@ function CourseItem({ data, onClickBuy }) {
   };
 
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow">
+    <div className="w-full max-w-sm bg-white border border-gray-100 rounded-lg shadow-2xl">
       <div className="h-[350px]">
         <Link to={`/course/${data._id}`}>
           <img
@@ -55,16 +55,16 @@ function CourseItem({ data, onClickBuy }) {
           />
         </Link>
       </div>
-      <div className="px-5 pb-5 w-full">
+      <div className="px-5 pb-5 w-full h-[200px]">
         <Link to={`/course/${data._id}`}>
-          <p className="text-xl font-semibold tracking-tight text-black">
+          <p className="text-xl font-semibold h-[110px] overflow-hidden tracking-tight text-black">
             {data.nameCourse}
           </p>
           <p className="text-xl font-medium tracking-tight text-gray-500">
             {data.teacherId.fullName}
           </p>
         </Link>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center  justify-between relative">
           <span className="text-3xl font-bold text-black">
             {data.price > 0
               ? new Intl.NumberFormat("vi-VN", {

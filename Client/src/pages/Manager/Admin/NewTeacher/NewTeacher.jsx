@@ -172,22 +172,24 @@ function NewTeacher() {
         )}
       </div>
 
-      <input
-        className="opacity-0"
-        id="file_input"
-        name="imageUrl"
-        required
-        type="file"
-        accept="image/*"
-        onChange={onChangeImage}
-      />
-
-      <button
-        type="submit"
-        className=" bg-primary hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-      >
-        Submit
-      </button>
+        <input
+          className="opacity-0"
+          id="file_input"
+          name="imageUrl"
+          required
+          type="file"
+          accept="image/*"
+          onChange={onChangeImage}
+        />
+  
+     <div className="flex justify-center">
+        <button
+          type="submit"
+          className=" bg-primary hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+        >
+          Submit
+        </button>
+     </div>
     </form>
   );
 }

@@ -41,13 +41,13 @@ function Home() {
 
       <div className="mx-10">
         <div className="flex justify-between">
-          <div className="my-6 font-bold">A broad selection of courses</div>
+          <div className="my-6 text-3xl italic font-bold">A broad selection of courses</div>
           <Link to={routes.courses} className="flex items-center">
             See all <MdKeyboardDoubleArrowRight />
           </Link>
         </div>
 
-        {data.length > 0 ? <ListCourse data={data} /> : <ClientEmpty />}
+        {data?.length > 0 ? <ListCourse data={data} /> : <ClientEmpty />}
       </div>
     </>
   );
