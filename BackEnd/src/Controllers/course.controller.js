@@ -21,8 +21,14 @@ module.exports = {
         name: new Date().getTime() + req.files.imageUrl[0].originalname,
         type: req.files.imageUrl[0].mimetype,
       });
+      const videoUrl = await uploadFirebase({
+        file: req.files.videoUrl[0],
+        name: new Date().getTime() + req.files.videoUrl[0].originalname,
+        type: req.files.videoUrl[0].mimetype,
+      });
       req.body.file = fileUrl;
       req.body.imageUrl = imageUrl;
+      req.body.videoUrl = videoUrl;
     }
     req.body.teacherId = req.user.id;
     const course = new CourseModel(req.body);
@@ -176,6 +182,15 @@ module.exports = {
           type: req.files.imageUrl[0].mimetype,
         });
         req.body.imageUrl = imageUrl;
+      }
+
+      if (req.files.videoUrl) {
+        const videoUrl = await uploadFirebase({
+          file: req.files.videoUrl[0],
+          name: new Date().getTime() + req.files.videoUrl[0].originalname,
+          type: req.files.videoUrl[0].mimetype,
+        });
+        req.body.videoUrl = videoUrl;
       }
     }
 

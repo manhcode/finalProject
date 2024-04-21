@@ -34,7 +34,7 @@ function Courses() {
 
   return (
     <>
-      {data.length > 0 ? <ListCourse data={data} /> : <ClientEmpty />}
+      {data?.length > 0 ? <ListCourse data={data} /> : <ClientEmpty />}
 
       <ReactPaginate
         pageCount={totalPage}

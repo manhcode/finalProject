@@ -5,6 +5,7 @@ import { AuthContext } from "~/shared/AuthProvider";
 import * as courseService from "~/services/courseService";
 import * as paymentService from "~/services/paymentService";
 import routes from "~/config/routes";
+import VideoPlayer from "~/components/VideoPlayer";
 
 function DetailCourse() {
   const params = useParams();
@@ -85,13 +86,12 @@ function DetailCourse() {
       navigator(routes.login);
     }
   };
-console.log(role > 0)
 
   return (
     <div>
       <div className="flex p-10">
         <div className="w-1/2 flex flex-col justify-center items-center">
-          <p className="text-2xl font-bold mx-10 my-14">{data.nameCourse}</p>
+          <p className="text-2xl font-bold">{data.nameCourse}</p>
           {role > 0 && (
             <button
               className="w-[160px] h-[48px] rounded-md bg-black text-white font-medium "
@@ -102,18 +102,13 @@ console.log(role > 0)
           )}
         </div>
         <div className="w-1/2 flex justify-center border-l border-neutral-100 items-center">
-          <img
-            src={data.imageUrl}
-            alt=""
-            className="h-[500px] w-auto object-cover rounded-xl"
-            style={{ filter: "drop-shadow(10px 7px 10px rgba(0,0,0,.3)" }}
-          />
+          <VideoPlayer data={data.videoUrl}/>
         </div>
       </div>
       <div className="px-10">
         {data.teacherId && (
           <Link to={`/teacher/${data.teacherId?._id}`}>
-           <div  className="flex">
+            <div className="flex">
               <img
                 src={data.teacherId?.imageUrl}
                 alt=""
@@ -122,7 +117,7 @@ console.log(role > 0)
               <div className="m-4">
                 <p className="font-bold ">{data.teacherId.fullName}</p>
               </div>
-           </div>
+            </div>
           </Link>
         )}
         <p className="text-center text-2xl font-bold mb-4">Description</p>

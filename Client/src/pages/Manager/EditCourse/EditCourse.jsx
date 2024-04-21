@@ -10,6 +10,7 @@ function EditCourse() {
     nameCourse: "",
     description: "",
     imageUrl: "",
+    videoUrl: "",
     price: "",
     file: "",
   });
@@ -33,6 +34,10 @@ function EditCourse() {
       const newData = { ...data };
       newData.file = file;
       setData(newData);
+    } else if (file && file.type.startsWith("video/")) {
+      const newData = { ...data };
+      newData.videoUrl = file;
+      setData(newData);
     }
   };
   
@@ -42,6 +47,7 @@ function EditCourse() {
     formData.append("nameCourse", data.nameCourse);
     formData.append("description", data.description);
     formData.append("imageUrl", data.imageUrl);
+    formData.append("videoUrl", data.videoUrl);
     formData.append("price", data.price);
     formData.append("file", data.file);
 
@@ -65,6 +71,7 @@ function EditCourse() {
           description: course.data.description,
           price: course.data.price,
           imageUrl: course.data.imageUrl,
+          videoUrl: course.data.videoUrl,
           file: course.data.file,
         });
       })
@@ -157,6 +164,23 @@ function EditCourse() {
       <div className="flex flex-col mb-4">
         <label
           className="mb-2 text-sm font-medium text-gray-900 border rounded-lg p-4"
+          htmlFor="file_video"
+        >
+          Upload Video
+        </label>
+        <input
+          className="opacity-0 h-0"
+          id="file_video"
+          name="videoUrl"
+          type="file"
+          accept="video/*"
+          onChange={onChangeFile}
+        />
+      </div>
+
+      <div className="flex flex-col mb-4">
+        <label
+          className="mb-2 text-sm font-medium text-gray-900 border rounded-lg p-4"
           htmlFor="file_course"
         >
           Upload file course ( pdf or docx )
@@ -171,12 +195,14 @@ function EditCourse() {
         />
       </div>
 
-      <button
-        type="submit"
-        className=" bg-primary hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-      >
-        Submit
-      </button>
+      <div className="flex justify-center w-full">
+        <button
+          type="submit"
+          className=" bg-primary hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+        >
+          Submit
+        </button>
+      </div>
     </form>
   );
 }

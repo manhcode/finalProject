@@ -11,6 +11,7 @@ router.post(
   upload.fields([
     { name: "file", maxCount: 1 },
     { name: "imageUrl", maxCount: 1 },
+    { name: "videoUrl", maxCount: 1 },
   ]),
   courseController.newCourse
 );
@@ -26,6 +27,7 @@ router.put(
   upload.fields([
     { name: "file", maxCount: 1 },
     { name: "imageUrl", maxCount: 1 },
+    { name: "videoUrl", maxCount: 1 },
   ]),
   courseController.editCourse
 );
