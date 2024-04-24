@@ -18,12 +18,12 @@ function Header() {
   };
 
   return (
-    <div className="py-4 w-full flex justify-around items-center">
+    <div className="py-4 w-full bg-gradient-to-br from-red-400 to-red-100 flex justify-around items-center">
       <Link to={routes.home} className="p-2">
         <FaHome size={30} />
       </Link>
 
-      <div className="w-1/3 flex items-center border border-green-200 rounded-xl overflow-hidden">
+      <div className="w-1/3 flex items-center border border-gray-900 rounded-xl overflow-hidden">
         <input
           placeholder="Search ..."
           value={nameCourse}
@@ -32,8 +32,8 @@ function Header() {
           className="w-full pl-4 py-2 outline-none"
         />
         <CiSearch
-          className="cursor-pointer w-10 h-10 p-2"
-          color="#ccc"
+          className="cursor-pointer bg-gray-900 w-10 h-10 p-2"
+          color="#FFFF00"
           onClick={onSearch}
         />
       </div>

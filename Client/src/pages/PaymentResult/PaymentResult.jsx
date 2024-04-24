@@ -36,16 +36,16 @@ function PaymentResult() {
       .then((response) => {
         if (response.data.code == "00") {
           setSuccess(true);
-          setMessage("Thanh toán thành công");
+          setMessage("Payment Success");
         } else if (response.data.code == 24) {
           setError(true);
-          setMessage("Thanh toán không thành công");
+          setMessage("Payment failed");
         }
       })
       .catch((err) => {
         if (err.response.status == 400) {
           setError(true);
-          setMessage("Thanh toán không thành công");
+          setMessage("Payment failed");
         }
       });
   }, [params, success]);

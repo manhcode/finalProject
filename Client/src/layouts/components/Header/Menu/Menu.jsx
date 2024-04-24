@@ -10,20 +10,13 @@ import { AuthContext } from "~/shared/AuthProvider";
 function Menu() {
   const { logOut, currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const MENU_STUDENT = [
+  const MENU_ITEM = [
     {
       title: "Profile",
       link: () => {
         navigate(routes.profile);
       },
       icon: <FaUserCircle size={18} className="mr-4" />,
-    },
-    {
-      title: "My course",
-      link: () => {
-        navigate(routes.myCourses);
-      },
-      icon: <FaBook size={18} className="mr-4 text-sky-500" />,
     },
     {
       title: "Log out",
@@ -34,12 +27,24 @@ function Menu() {
     },
   ];
 
+  const MENU_STUDENT = [
+    {
+      title: "My course",
+      link: () => {
+        navigate(routes.myCourses);
+      },
+      icon: <FaBook size={18} className="mr-4 text-sky-500" />,
+    },
+    ...MENU_ITEM,
+  ]
+
   const [isOpen, setIsOpen] = useState(false);
   const { role } = useContext(AuthContext);
+  const MENU = role === 1 ? MENU_ITEM : MENU_STUDENT
 
   return (
     <div className="relative">
-      {role === 2 ? (
+      {role !== 0 ? (
         <button onClick={() => setIsOpen(!isOpen)}>
           {currentUser.imageUrl ? (
             <img
@@ -65,7 +70,7 @@ function Menu() {
       )}
       {isOpen && (
         <div className="absolute min-w-[150px] right-0 border rounded-md bg-white z-10">
-          {MENU_STUDENT.map((data) => (
+          {MENU.map((data) => (
             <ListItem key={data.title} data={data} />
           ))}
         </div>

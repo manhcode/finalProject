@@ -115,12 +115,12 @@ function DetailCourse() {
                 className="w-[100px] h-[100px] rounded-full shadow-xl"
               />
               <div className="m-4">
-                <p className="font-bold ">{data.teacherId.fullName}</p>
+                <p className="font-bold text-green-700 ">{data.teacherId.fullName}</p>
               </div>
             </div>
           </Link>
         )}
-        <p className="text-center text-2xl font-bold mb-4">Description</p>
+        <p className="text-center text-indigo-700 text-2xl font-bold mb-4">Description</p>
         <p className="m-4">{data.description}</p>
       </div>
     </div>

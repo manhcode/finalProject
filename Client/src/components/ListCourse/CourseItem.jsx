@@ -45,7 +45,7 @@ function CourseItem({ data, onClickBuy }) {
   };
 
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-100 rounded-lg shadow-2xl">
+    <div className="w-full max-w-sm bg-gradient-to-br from-red-200 to-red-100 border border-gray-100 rounded-lg shadow-2xl">
       <div className="h-[350px]">
         <Link to={`/course/${data._id}`}>
           <img

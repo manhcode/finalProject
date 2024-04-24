@@ -13,7 +13,7 @@ function Home() {
 
   const fetch = () => {
     courseService
-      .getAllCourse({ page: 1, perPage: 10 })
+      .getAllCourse({ page: 1, perPage: 9 })
       .then((course) => {
         setData(course.data.data);
       })
@@ -26,8 +26,8 @@ function Home() {
 
   return (
     <>
-      <div className="flex items-center justify-center py-20 bg-gradient-to-br from-green-600 to-green-300 select-none">
-        <div className="w-1/2 px-6 text-white font-semibold">
+      <div className="flex items-center justify-center py-20 bg-gradient-to-br bg-white-200 select-none">
+        <div className="w-1/2 px-6 text-black font-semibold">
           &nbsp; &nbsp; &nbsp; Welcome to our online learning platform! We offer
           a wide range of courses designed to help you acquire new skills and
           advance your career. Whether you&apos;re interested in technology,
@@ -42,7 +42,7 @@ function Home() {
       <div className="mx-10">
         <div className="flex justify-between">
           <div className="my-6 text-3xl italic font-bold">A broad selection of courses</div>
-          <Link to={routes.courses} className="flex items-center">
+          <Link to={routes.courses} className="flex items-center text-4xl">
             See all <MdKeyboardDoubleArrowRight />
           </Link>
         </div>
