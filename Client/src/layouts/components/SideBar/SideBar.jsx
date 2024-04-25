@@ -48,8 +48,8 @@ function SideBar() {
           to={data.link}
           className={({ isActive }) =>
             `${
-              isActive ? "font-medium bg-green-400  text-white " : ""
-            } px-4 py-3 cursor-pointer hover:bg-green-400 hover:text-white hover:font-medium`
+              isActive ? "font-medium bg-gradient-to-br from-red-400 to-red-100  text-white " : ""
+            } px-4 py-3 cursor-pointer hover:bg-gradient-to-br from-red-400 to-red-100 hover:text-white hover:font-medium`
           }
           key={data.title}
         >

@@ -8,7 +8,7 @@ function Profile() {
   const { currentUser } = useContext(AuthContext);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-pink-100 to-green-300">
+    <div className="min-h-screen flex flex-col ">
     <div className="text-center mb-4">
       <h1 className="text-6xl font-bold text-gray-800 mb-4">Profile</h1>
       </div>

@@ -137,7 +137,7 @@ module.exports = {
 
   getCourseTeacher(req, res, next) {
     const { page, per_page, nameCourse, teacherId } = req.query;
-    const objWhere = { teacherId: teacherId };
+    const objWhere = { teacherId: teacherId }
 
     if (nameCourse) objWhere.nameCourse = new RegExp(nameCourse, "i");
 

@@ -3,6 +3,7 @@ import SideBar from "../components/SideBar";
 import HeaderManager from "./HeaderManager";
 import { useContext } from "react";
 import { AuthContext } from "~/shared/AuthProvider";
+import Footer from "../components/Footer";
 
 function ManagerLayout({ children }) {
   const { role } = useContext(AuthContext);
@@ -12,6 +13,7 @@ function ManagerLayout({ children }) {
   }
 
   return (
+    <>
     <div>
       <HeaderManager />
       <div className="flex">
@@ -19,6 +21,8 @@ function ManagerLayout({ children }) {
         {children}
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
 

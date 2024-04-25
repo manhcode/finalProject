@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { Link } from "react-router-dom";
-
+import backgroundImage from "~/assets/image/Bg.png";
 import Logo from "~/assets/image/Course.png";
 import ClientEmpty from "~/components/ClientEmpty";
 import ListCourse from "~/components/ListCourse";
@@ -25,7 +25,17 @@ function Home() {
   }, []);
 
   return (
-    <>
+    <div style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
       <div className="flex items-center justify-center py-20 bg-gradient-to-br bg-white-200 select-none">
         <div className="w-1/2 px-6 text-black font-semibold">
           &nbsp; &nbsp; &nbsp; Welcome to our online learning platform! We offer
@@ -49,7 +59,7 @@ function Home() {
 
         {data?.length > 0 ? <ListCourse data={data} /> : <ClientEmpty />}
       </div>
-    </>
+    </div>
   );
 }
 

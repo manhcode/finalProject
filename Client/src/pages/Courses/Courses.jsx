@@ -33,8 +33,8 @@ function Courses() {
   }, [currentPage, nameCourse]);
 
   return (
-    <div className="text-center mb-4">
-      <h1 className="text-6xl font-bold text-gray-800 mb-4">Courses</h1>
+    <div className="mb-4">
+      <h1 className="text-center text-6xl font-bold text-gray-800 mb-4">Courses</h1>
 
       {data?.length > 0 ? <ListCourse data={data} /> : <ClientEmpty />}
 

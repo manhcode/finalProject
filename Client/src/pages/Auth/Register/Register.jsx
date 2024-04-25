@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import TextInput from "~/components/TextInput";
 import routes from "~/config/routes";
 import { AuthContext } from "~/shared/AuthProvider";
+import backgroundImage from "~/assets/image/Bg.png";
 
 function Register() {
   const { register } = useContext(AuthContext);
@@ -27,8 +28,15 @@ function Register() {
   };
 
   return (
-    <div className="h-[100vh] flex justify-center items-center bg-neutral-100">
-      <form onSubmit={onSubmit} className="relative flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+    <div
+      className="h-screen flex justify-center items-center"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <form onSubmit={onSubmit} className="relative w-96 flex flex-col rounded-xl bg-white border border-gray-900 text-gray-700 shadow-md">
         <div className="relative mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tl from-gray-900 to-slate-800">
           <h3 className="block font-sans text-3xl font-semibold leading-snug tracking-normal text-white antialiased">
             Sign Up

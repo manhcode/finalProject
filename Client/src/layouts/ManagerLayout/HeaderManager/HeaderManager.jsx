@@ -14,7 +14,7 @@ function HeaderManager() {
   };
 
   return (
-    <div className="py-3 px-4 border-b flex justify-between items-center">
+    <div className="py-3 px-4 border-b flex justify-between items-center bg-gradient-to-br from-red-400 to-red-100">
       <Link to={routes.home} className="p-2">
         <FaHome size={30} />
       </Link>

@@ -1,6 +1,9 @@
 const moment = require("moment");
 const querystring = require("qs");
 let crypto = require("crypto");
+const paymentsModel = require("../models/payments.model");
+const { connect } = require("../config/db.config");
+
 
 function sortObject(obj) {
   let sorted = {};
