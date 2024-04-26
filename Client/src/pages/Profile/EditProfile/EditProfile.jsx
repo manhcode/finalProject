@@ -21,7 +21,7 @@ function EditProfile() {
       rePassword: "",
       fullName: currentUser.fullName || "",
       email: currentUser.email || "",
-      gender: currentUser.gender || "",
+      gender: currentUser.gender || 0,
     });
 
     if (currentUser.imageUrl) {
@@ -32,6 +32,7 @@ function EditProfile() {
   const onChange = (e) => {
     const newData = { ...data };
     newData[e.target.name] = e.target.value;
+    console.log(newData);
     setData(newData);
   };
 
@@ -57,9 +58,6 @@ function EditProfile() {
   }
 
   return (
-    <div className="w-3/4 mx-auto mt-10">
-      <h1 className="text-center text-6xl font-bold text-gray-800 mb-4">Profile</h1>
-      <div className="max-w-7xl border border-gray-200 rounded-lg shadow-md p-6">
     <form
       onSubmit={onSubmit}
       className={`w-3/4 mx-auto mt-10 ${image && "flex justify-center"}`}
@@ -69,7 +67,7 @@ function EditProfile() {
           <img
             src={image}
             alt=""
-            className="rounded-full w-[200px] h-[200px] object-cover object-top mr-9"
+            className="rounded-full w-[200px] h-[200px] object-cover object-top mr-4"
           />
         )}
       </div>
@@ -145,7 +143,7 @@ function EditProfile() {
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="email"
-            name="floating_email"
+            name="email"
             id="floating_email"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
@@ -178,18 +176,15 @@ function EditProfile() {
           accept="image/*"
           onChange={onChangeImage}
         />
-        <div className="flex justify-center w-full">
+
         <button
           type="submit"
-          className=" bg-primary hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-white text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+          className=" bg-primary hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
         >
           Submit
         </button>
-        </div>
       </div>
     </form>
-    </div>  
-    </div>
   );
 }
 
