@@ -19,11 +19,11 @@ function Header() {
 
   return (
     <div className="py-4 w-full bg-gradient-to-br from-red-400 to-red-100 flex justify-around items-center">
-      <Link to={routes.home} className="p-2">
+      <Link to={routes.home} className="p-2 hidden sm:block">
         <FaHome size={30} />
       </Link>
 
-      <div className="w-1/3 flex items-center border border-gray-900 rounded-xl overflow-hidden">
+      <div className="w-1/3 sm:w-1/2 flex items-center border border-gray-900 rounded-xl overflow-hidden">
         <input
           placeholder="Search ..."
           value={nameCourse}

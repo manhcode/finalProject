@@ -29,7 +29,7 @@ function DetailTeacher() {
 
   return (
     <>
-      <div className="flex justify-center w-full">
+      <div className="flex md:flex-row flex-col justify-center items-center w-full mt-10">
         <div className="px-10 flex flex-col items-center justify-center">
           {dataTeacher.imageUrl ? (
             <img
@@ -41,7 +41,7 @@ function DetailTeacher() {
             <FaUserCircle size={100} />
           )}
         </div>
-        <div className="w-2/3">
+        <div className="md:w-2/3 md:px-0 px-4 w-full mt-4">
           <div className="border border-blue-200 rounded-[5px] overflow-hidden mb-2">
             <div className="bg-blue-200 px-4 py-2">Full name</div>
             <div className="px-4 py-2">{dataTeacher.fullName}</div>

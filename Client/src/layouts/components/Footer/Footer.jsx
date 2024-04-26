@@ -34,7 +34,7 @@ const description =
 
 const Footer = () => {
   return (
-    <footer className="bg-[#191F33] text-white py-4">
+    <footer className="bg-[#191F33] text-white py-4 mt-10">
       <div className="container mx-auto px-4">
         {/* Description */}
         <p className="text-center text-lg font-medium max-w-lg mx-auto mb-6">{description}</p>

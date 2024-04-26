@@ -16,7 +16,7 @@ function ManagerLayout({ children }) {
     <>
     <div>
       <HeaderManager />
-      <div className="flex">
+      <div className="flex flex-col md:flex-row">
         <SideBar />
         {children}
       </div>

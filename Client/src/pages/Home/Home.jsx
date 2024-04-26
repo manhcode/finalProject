@@ -36,8 +36,8 @@ function Home() {
       alignItems: 'center',
     }}
   >
-      <div className="flex items-center justify-center py-20 bg-gradient-to-br bg-white-200 select-none">
-        <div className="w-1/2 px-6 text-black font-semibold">
+      <div className="flex items-center md:flex-row flex-col justify-center py-20 bg-gradient-to-br bg-white-200 select-none">
+        <div className="w-full md:w-1/2 px-6 text-black font-semibold">
           &nbsp; &nbsp; &nbsp; Welcome to our online learning platform! We offer
           a wide range of courses designed to help you acquire new skills and
           advance your career. Whether you&apos;re interested in technology,
@@ -51,8 +51,8 @@ function Home() {
 
       <div className="mx-10">
         <div className="flex justify-between">
-          <div className="my-6 text-3xl italic font-bold">A broad selection of courses</div>
-          <Link to={routes.courses} className="flex items-center text-4xl">
+          <div className="my-6 md:text-3xl italic font-bold">A broad selection of courses</div>
+          <Link to={routes.courses} className="flex items-center md:text-4xl">
             See all <MdKeyboardDoubleArrowRight />
           </Link>
         </div>

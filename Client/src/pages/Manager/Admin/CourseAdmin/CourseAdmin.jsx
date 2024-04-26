@@ -26,7 +26,7 @@ function CourseAdmin() {
     courseService
       .getAllCourse({
         page: currentPage,
-        perPage: 10,
+        perPage: 5,
         nameCourse: nameCourse,
       })
       .then((course) => {
@@ -68,7 +68,7 @@ function CourseAdmin() {
   return (
     <div className="w-full px-10">
       <div className="flex justify-end my-4">
-        <div className="w-1/3 flex items-center border border-gray-200 rounded-xl overflow-hidden">
+        <div className="md:w-1/3 w-full flex items-center border border-gray-200 rounded-xl overflow-hidden">
           <input
             placeholder="Search ..."
             className="w-full pl-4 outline-none p-2"

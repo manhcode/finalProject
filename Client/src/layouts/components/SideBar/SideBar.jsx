@@ -42,7 +42,7 @@ function SideBar() {
   }
 
   return (
-    <div className="w-1/6 border-r flex flex-col">
+    <div className="w-full md:w-1/6 md:border-r flex md:flex-col flex-row md:justify-start justify-center">
       {sideBarItem.map((data) => (
         <NavLink
           to={data.link}

@@ -89,19 +89,19 @@ function DetailCourse() {
 
   return (
     <div>
-      <div className="flex p-10">
-        <div className="w-1/2 flex flex-col justify-center items-center">
+      <div className="flex flex-col md:flex-row p-10">
+        <div className="w-full md:w-1/2 flex flex-col justify-center items-center">
           <p className="text-2xl font-bold">{data.nameCourse}</p>
           {role > 0 && (
             <button
-              className="w-[160px] h-[48px] rounded-md bg-black text-white font-medium "
+              className="w-[160px] h-[48px] my-4 rounded-md bg-black text-white font-medium "
               onClick={onClickBuy}
             >
               {received ? "Download" : data.price > 0 ? "Buy now" : "Get free"}
             </button>
           )}
         </div>
-        <div className="w-1/2 flex justify-center border-l border-neutral-100 items-center">
+        <div className="w-full md:w-1/2 flex justify-center border-l border-neutral-100 items-center">
           <VideoPlayer data={data.videoUrl}/>
         </div>
       </div>
