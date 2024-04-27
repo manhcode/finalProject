@@ -60,9 +60,9 @@ function EditProfile() {
   return (
     <form
       onSubmit={onSubmit}
-      className={`w-3/4 mx-auto mt-10 ${image && "flex justify-center"}`}
+      className={`w-3/4 mx-auto mt-10 ${image && "flex justify-center md:flex-row flex-col"}`}
     >
-      <div>
+      <div className="w-full flex justify-center ">
         {image && (
           <img
             src={image}

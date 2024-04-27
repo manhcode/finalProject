@@ -8,7 +8,7 @@ function Item({ data }) {
   };
 
   return (
-    <div className="flex my-4 relative rounded-lg  overflow-hidden">
+    <div className="flex flex-col md:flex-row my-4 relative rounded-lg overflow-hidden">
       <Link
         to={`/course/${data.courseId._id}`}
         className="mr-4 flex ove justify-center"
@@ -20,16 +20,17 @@ function Item({ data }) {
         />
       </Link>
       <div className="my-4 mr-10">
+        <FaCloudDownloadAlt
+        size={32}
+        className="absolute right-0 cursor-pointer"
+        onClick={downloadPDF}
+      />
         <div className="flex flex-col justify-between h-full">
           <p className="text-xl font-bold">{data.courseId.nameCourse}</p>
           <p className="text-sm">{data.teacherId.fullName}</p>
         </div>
       </div>
-      <FaCloudDownloadAlt
-        size={32}
-        className="absolute right-0 cursor-pointer"
-        onClick={downloadPDF}
-      />
+
     </div>
   );
 }

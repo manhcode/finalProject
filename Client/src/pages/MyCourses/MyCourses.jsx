@@ -18,7 +18,7 @@ function MyCourses() {
   }, []);
 
   return (
-    <div className="px-20">
+    <div className="mx:px-20 px-4">
       <div className="text-2xl font-bold my-5">My Course</div>
       <ListMyCourses data={data} />
     </div>

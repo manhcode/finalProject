@@ -71,7 +71,7 @@ function CourseTeacher() {
   return (
     <div className="w-full px-10">
       <div className="flex justify-end my-4">
-        <div className="w-1/3 flex items-center border border-gray-200 rounded-xl overflow-hidden">
+        <div className="md:w-1/3 w-full flex items-center border border-gray-200 rounded-xl overflow-hidden">
           <input
             placeholder="Search ..."
             name="nameCourse"
@@ -105,12 +105,12 @@ function CourseTeacher() {
                   className="bg-white border-b hover:bg-gray-100 "
                   key={item._id}
                 >
-                  <th
+                  <t
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900"
                   >
                     {item.nameCourse}
-                  </th>
+                  </t>
                   <td className="px-6 py-4">{item.description}</td>
                   <td className="px-6 py-4">
                     {new Intl.NumberFormat("vi-VN", {

@@ -44,6 +44,8 @@ function CourseItem({ data, onClickBuy }) {
     onClickBuy(data);
   };
 
+  const { role } = useContext(AuthContext);
+
   return (
     <div className="w-full max-w-sm bg-gradient-to-br from-red-200 to-red-100 border border-gray-100 rounded-lg shadow-2xl">
       <div className="h-[350px]">
@@ -66,7 +68,7 @@ function CourseItem({ data, onClickBuy }) {
             </p>
               )}
         </Link>
-        <div className="flex items-center  justify-between relative">
+        {role === 2 && <div className="flex items-center  justify-between relative">
           <span className="text-3xl font-bold text-black">
             {data.price > 0
               ? new Intl.NumberFormat("vi-VN", {
@@ -83,7 +85,7 @@ function CourseItem({ data, onClickBuy }) {
           >
             {received ? "Received" : data.price > 0 ? "Buy" : "Get free"}
           </button>
-        </div>
+        </div>}
       </div>
       <Modal
         title="Buy course"
