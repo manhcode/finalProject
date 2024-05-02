@@ -60,14 +60,14 @@ function EditProfile() {
   return (
     <form
       onSubmit={onSubmit}
-      className={`w-3/4 mx-auto mt-10 ${image && "flex justify-center md:flex-row flex-col"}`}
+      className={`w-3/4 mx-auto h-full mt-10 mb-40 ${image && "flex justify-center md:flex-row flex-col"}`}
     >
-      <div className="w-full flex justify-center ">
+      <div className="justify-center ">
         {image && (
           <img
             src={image}
             alt=""
-            className="rounded-full w-[200px] h-[200px] object-cover object-top mr-4"
+            className="w-[200px] h-[200px] object-cover object-top rounded-full border border-black"
           />
         )}
       </div>
@@ -177,12 +177,14 @@ function EditProfile() {
           onChange={onChangeImage}
         />
 
+        <div className="text-center">
         <button
-          type="submit"
-          className=" bg-primary hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+         type="submit"
+          className="bg-primary hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-white text-sm w-full sm:w-auto px-5 py-2.5"
         >
-          Submit
+        Submit
         </button>
+        </div>
       </div>
     </form>
   );

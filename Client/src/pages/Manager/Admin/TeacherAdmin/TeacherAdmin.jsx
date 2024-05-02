@@ -65,7 +65,7 @@ function TeacherAdmin() {
   }, [fetch]);
 
   return (
-    <div className="w-full px-10">
+    <div className="w-full px-10 h-full mt-10 mb-80">
       <div className="flex justify-end my-4">
         <div className="md:w-1/3 w-full flex items-center border border-gray-200 rounded-xl overflow-hidden">
           <input
@@ -160,7 +160,7 @@ function TeacherAdmin() {
 
       <Modal
         title="Delete course"
-        description={"Are you sure to delete the course?"}
+        description={"Are you sure to delete teacher?"}
         showModal={showModal}
         onClose={onClose}
         onSubmit={onDelete}

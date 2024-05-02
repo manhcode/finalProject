@@ -65,7 +65,7 @@ function EditUser() {
   return (
     <form
       onSubmit={onSubmit}
-      className={`w-3/4 mx-auto mt-10 ${image && "flex justify-center"}`}
+      className={`w-3/4 mx-auto h-full mt-10 mb-40 ${image && "flex justify-center"}`}
     >
       <div>
         {image && (

@@ -51,7 +51,7 @@ function PaymentResult() {
   }, [params, success]);
 
   return (
-    <div className="flex flex-col justify-center items-center h-full">
+    <div className="flex flex-col justify-center items-center h-full mt-10 mb-80 ">
       <>
         <FaCheckCircle
           size={100}

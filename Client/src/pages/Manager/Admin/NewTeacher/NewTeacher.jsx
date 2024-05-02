@@ -37,7 +37,7 @@ function NewTeacher() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="w-3/4 mx-auto mt-10">
+    <form onSubmit={onSubmit} className="w-3/4 mx-auto h-full mt-10 mb-40">
       <div className="relative z-0 w-full mb-5 group">
         <input
           id="Username"

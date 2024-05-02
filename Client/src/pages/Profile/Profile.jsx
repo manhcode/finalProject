@@ -18,7 +18,7 @@ function Profile() {
             <img
               src={currentUser.imageUrl}
               alt="avatar"
-              className="w-[200px] h-[200px] object-cover object-top rounded-full"
+              className="w-[200px] h-[200px] object-cover object-top rounded-full border border-black"
             />
           ) : (
             <FaUserCircle size={100} />
