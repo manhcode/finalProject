@@ -19,6 +19,11 @@ router.post(
 router.get("/buy-course/:id", verifyToken, courseController.buyCourse);
 router.get("/get-all-course", courseController.getCourse);
 router.get("/get-course-teacher", courseController.getCourseTeacher);
+router.get(
+  "/get-course-teacher-sold",
+  verifyTokenTeacher,
+  courseController.getCourseTeacherSold
+);
 router.get("/get-my-course", verifyToken, courseController.getMyCourse);
 router.get("/get-course/:id", courseController.getCourseById);
 

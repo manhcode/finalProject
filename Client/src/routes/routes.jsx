@@ -20,6 +20,8 @@ import PaymentResult from "~/pages/PaymentResult";
 import EditUser from "~/pages/Manager/Admin/EditUser";
 import EditCourse from "~/pages/Manager/EditCourse";
 import DetailTeacher from "~/pages/DetailTeacher";
+import OrderAdmin from "~/pages/Manager/Admin/OrderAdmin";
+import CourseTeacherSold from "~/pages/Manager/Teacher/CourseTeacherSold";
 
 const publicRoutes = [
   { path: config.routes.home, component: Home },
@@ -65,11 +67,21 @@ const publicRoutes = [
     component: CourseAdmin,
     Layout: ManagerLayout,
   },
+  {
+    path: config.routes.orderAdmin,
+    component: OrderAdmin,
+    Layout: ManagerLayout,
+  },
 
   // Manager teacher
   {
     path: config.routes.coursesTeacher,
     component: CourseTeacher,
+    Layout: ManagerLayout,
+  },
+  {
+    path: config.routes.coursesTeacherSold,
+    component: CourseTeacherSold,
     Layout: ManagerLayout,
   },
   {

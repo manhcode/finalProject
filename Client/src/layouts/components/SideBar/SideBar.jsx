@@ -12,6 +12,10 @@ const SIDEBAR_TEACHER = [
     title: "Course",
     link: routes.coursesTeacher,
   },
+  {
+    title: "Course Sold",
+    link: routes.coursesTeacherSold,
+  },
 ];
 
 const SIDEBAR_ADMIN = [
@@ -31,6 +35,10 @@ const SIDEBAR_ADMIN = [
     title: "Course",
     link: routes.courseAdmin,
   },
+  {
+    title: "Orders",
+    link: routes.orderAdmin,
+  },
 ];
 
 function SideBar() {
@@ -48,7 +56,9 @@ function SideBar() {
           to={data.link}
           className={({ isActive }) =>
             `${
-              isActive ? "font-medium bg-gradient-to-br from-red-400 to-red-100  text-white " : ""
+              isActive
+                ? "font-medium bg-gradient-to-br from-red-400 to-red-100  text-white "
+                : ""
             } px-4 py-3 cursor-pointer hover:bg-gradient-to-br from-red-400 to-red-100 hover:text-white hover:font-medium`
           }
           key={data.title}

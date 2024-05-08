@@ -4,6 +4,7 @@ import { MdError } from "react-icons/md";
 
 import * as paymentService from "~/services/paymentService";
 import * as courseService from "~/services/courseService";
+import * as orderService from "~/services/orderService";
 
 function PaymentResult() {
   const [success, setSuccess] = useState(false);
@@ -29,6 +30,16 @@ function PaymentResult() {
           console.log(res);
         })
         .catch((err) => console.log(err));
+
+      orderService
+        .createOrder({
+          course: params.vnp_OrderInfo,
+          price: +params?.vnp_Amount / 100,
+          status: "Paid",
+        })
+        .then((res) => {
+          console.log(res);
+        });
     }
 
     paymentService

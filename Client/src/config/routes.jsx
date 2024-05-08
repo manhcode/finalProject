@@ -19,11 +19,13 @@ const routes = {
   studentAdmin: "/manager/admin/student",
   teacherAdmin: "/manager/admin/teacher",
   courseAdmin: "/manager/admin/course",
+  orderAdmin: "/manager/admin/order",
   editUser: "/manager/admin/user/edit/:id",
   newTeacher: "/manager/admin/new-teacher",
 
   // Manager Teacher
   coursesTeacher: "/manager/teacher/courses",
+  coursesTeacherSold: "/manager/teacher/courses-sold",
   newCourse: "/manager/teacher/new-course",
 };
 

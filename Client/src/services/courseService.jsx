@@ -12,6 +12,18 @@ export const getAllCourse = ({ page, perPage, nameCourse }) => {
   }
 };
 
+export const getCoursesSold = ({ page, perPage }) => {
+  try {
+    const res = httpRequest.get("course/get-course-teacher-sold", {
+      params: { page, per_page: perPage },
+      headers: { authorization: "Bearer " + localStorage.token },
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const buyCourse = async ({ courseId }) => {
   try {
     const res = await httpRequest.get(`course/buy-course/${courseId}`, {
@@ -39,7 +51,12 @@ export const getMyCourse = async ({ page, perPage }) => {
   }
 };
 
-export const getCourseTeacher = async ({ page, perPage, nameCourse ,teacherId}) => {
+export const getCourseTeacher = async ({
+  page,
+  perPage,
+  nameCourse,
+  teacherId,
+}) => {
   try {
     const token = localStorage.token;
     const res = await httpRequest.get(`course/get-course-teacher`, {
@@ -48,7 +65,7 @@ export const getCourseTeacher = async ({ page, perPage, nameCourse ,teacherId}) 
         page,
         per_page: perPage,
         nameCourse,
-        teacherId
+        teacherId,
       },
     });
     return res.data;

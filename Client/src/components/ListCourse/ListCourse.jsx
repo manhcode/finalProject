@@ -60,8 +60,8 @@ function ListCourse({ data }) {
   return (
     <>
       <div className="flex flex-wrap justify-center gap-8">
-        {data.map((item) => (
-          <CourseItem key={item._id} data={item} onClickBuy={onClickBuy} />
+        {data.map((course) => (
+          <CourseItem key={course._id} data={course} onClickBuy={onClickBuy} />
         ))}
       </div>
     </>

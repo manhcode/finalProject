@@ -137,7 +137,7 @@ module.exports = {
 
   getCourseTeacher(req, res, next) {
     const { page, per_page, nameCourse, teacherId } = req.query;
-    const objWhere = { teacherId: teacherId }
+    const objWhere = { teacherId: teacherId };
 
     if (nameCourse) objWhere.nameCourse = new RegExp(nameCourse, "i");
 
@@ -163,6 +163,71 @@ module.exports = {
       .catch((error) => {
         res.status(500).json({ error: error });
       });
+  },
+
+  async getCourseTeacherSold(req, res, next) {
+    const { page, per_page } = req.query;
+    const teacherId = req.user.id;
+
+    try {
+      const coursesSold = await MyCourseModel.aggregate([
+        {
+          $sort: { createdAt: 1 },
+        },
+        {
+          $group: {
+            _id: "$courseId",
+            quantity: { $sum: 1 },
+            teacherId: { $first: "$teacherId" },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            courseId: "$_id",
+            quantity: 1,
+            teacherId: 1,
+          },
+        },
+      ]);
+
+      const coursesSoldByTeacher = coursesSold.filter(
+        (it) => it.teacherId.toString() === teacherId
+      );
+      const formatCourseSold = [];
+
+      for await (const item of coursesSoldByTeacher) {
+        const foundCourse = await CourseModel.findById(item.courseId).exec();
+
+        const actualAmount = foundCourse.price * 0.9;
+
+        formatCourseSold.push({
+          ...item,
+          course: foundCourse,
+          actualAmount,
+          totalPrice: actualAmount * item.quantity,
+        });
+      }
+
+      const currentPage = parseInt(page) || 1;
+      const itemsPerPage = parseInt(per_page) || formatCourseSold.length;
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+
+      const totalItems = formatCourseSold.length;
+      const totalPages =
+        Math.ceil(totalItems / itemsPerPage) || formatCourseSold.length;
+
+      const items = formatCourseSold.slice(startIndex, endIndex);
+
+      res.json({
+        data: items,
+        currentPage,
+        totalPages,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
   },
 
   async editCourse(req, res, next) {
